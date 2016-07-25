@@ -28,8 +28,8 @@ int main() {
 	task1Sp	= 0xace0face;
 	noArgFunc();
 
-	initTcb();
-	task1Sp	= getTcbTask1Sp();
+	initTcb("task1", TASK_1);
+	task1Sp	= getTcbSp(TASK_1);
 	saveRegs();
 	
 	initSysTick();
