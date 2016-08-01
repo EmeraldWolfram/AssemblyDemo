@@ -11,45 +11,16 @@
 #include "TCB.h"
 #include "SaveRegisters.h"
 #include "RetrieveRegisters.h"
+#include "InitTask.h"
 #include "LinkedList.h"
 
 extern int fourBytes;						// Import from AssemblyModule.s
 extern uint16_t twoBytes;				// Import from AssemblyModule.s
 extern int taskSp;							// Import from SaveRegisters.s
+extern int taskFunc;
 
 uint32_t variableInC = 0xdeaf;
-
-void taskInit(Tcb* tcb, void* taskFunc){
-	
-}
-
-int main() {
-	int i = 0;
-	fourBytes = 0xdeadbeef;
-	taskSp	= 0xace0face;
-	noArgFunc();
-	
-	initTcb1();
-	taskSp = task1Tcb.sp;
-	saveRegs();
-
-	initLinkedList();
-	initMainTcb();
-
-	initSysTick();
-
-	
-	while(1) {
-		i++;
-	}
-
-	return 0;				// Verify that 'variableInC' now contains 0xB19FACE
-}
-
-int cFunc() {
-	return 0xc00000 + twoBytes;		//
-}
-
+//All tasks =====================================================
 void task1(){
 	int i = 0;
 	
@@ -72,4 +43,47 @@ void task3(){
 	while(1){
 		i++;
 	}
+}
+
+void taskInit(Tcb* tcb, void* tFunc){
+	taskSp = (uint32_t)tcb->sp;
+	taskFunc	= (uint32_t)tFunc;
+	initTask();
+	tcb->sp	= taskSp;
+}
+//============================================
+int main() {
+	int i = 0;
+	fourBytes = 0xdeadbeef;
+	taskSp	= 0xace0face;
+	noArgFunc();
+	
+	
+	initLinkedList();
+	initMainTcb();
+	//First Coursework saveRegs()
+	initTcb1();
+	taskSp = task1Tcb.sp;
+	saveRegs();
+	//End of 1st course work
+	taskInit(&task1Tcb, task1);
+	
+	initTcb2();
+	initTcb3();
+	taskInit(&task2Tcb, task2);
+	taskInit(&task3Tcb, task3);
+	
+
+	initSysTick();
+
+	
+	while(1) {
+		i++;
+	}
+
+	return 0;				// Verify that 'variableInC' now contains 0xB19FACE
+}
+
+int cFunc() {
+	return 0xc00000 + twoBytes;		//
 }

@@ -477,6 +477,16 @@
               <FileType>5</FileType>
               <FilePath>.\src\RetrieveRegisters.h</FilePath>
             </File>
+            <File>
+              <FileName>InitTask.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\InitTask.s</FilePath>
+            </File>
+            <File>
+              <FileName>InitTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\InitTask.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
