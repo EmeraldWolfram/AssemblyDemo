@@ -17,8 +17,9 @@
 extern int fourBytes;						// Import from AssemblyModule.s
 extern uint16_t twoBytes;				// Import from AssemblyModule.s
 extern int taskSp;							// Import from SaveRegisters.s
-extern int taskFunc;
+extern int curSp;
 
+uint32_t taskFunc;
 uint32_t variableInC = 0xdeaf;
 //All tasks =====================================================
 void task1(){
@@ -45,14 +46,13 @@ void task3(){
 	}
 }
 
-void taskInit(Tcb* tcb, void* tFunc){
-	taskSp = (uint32_t)tcb->sp;
+void taskInit(Tcb tcb, void* tFunc){
+	curSp = tcb.sp;
 	taskFunc	= (uint32_t)tFunc;
 	initTask();
-	tcb->sp	= taskSp;
 }
 //============================================
-int main() {
+int main() {	
 	int i = 0;
 	fourBytes = 0xdeadbeef;
 	taskSp	= 0xace0face;
@@ -66,17 +66,20 @@ int main() {
 	taskSp = task1Tcb.sp;
 	saveRegs();
 	//End of 1st course work
-	taskInit(&task1Tcb, task1);
+	taskInit(task1Tcb, task1);
+	task1Tcb.sp	= curSp;
 	
 	initTcb2();
 	initTcb3();
-	taskInit(&task2Tcb, task2);
-	taskInit(&task3Tcb, task3);
-	
+	taskInit(task2Tcb, task2);
+	task2Tcb.sp = curSp;
+	taskInit(task3Tcb, task3);
+	task3Tcb.sp = curSp;
 
 	initSysTick();
 
-	
+	querySp();
+	stackList.head->sp	= curSp;
 	while(1) {
 		i++;
 	}

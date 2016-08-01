@@ -43,6 +43,10 @@
 #include "stm32f4xx_hal.h"
 #include "LinkedList.h"
 #include "TCB.h"
+#include "InitTask.h"
+
+extern int curSp;
+
 
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
@@ -159,6 +163,12 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+	Tcb* currentTcb	= listRemoveFirst(&stackList);
+	querySp();
+	currentTcb->sp	= curSp;
+	addListLast(&stackList, currentTcb);
+	switchSp(stackList.head->sp);
+	
 //	clearSysTickCountFlag();
   HAL_IncTick();
 }
