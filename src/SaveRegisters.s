@@ -1,8 +1,8 @@
 					PRESERVE8
 					THUMB
 					AREA    MyData, DATA, READWRITE, ALIGN=2
-					EXPORT  task1Sp
-task1Sp		DCD     1
+					EXPORT  taskSp
+taskSp		DCD     1
 
 					AREA		MyCode, CODE, READONLY
 saveRegs	PROC
@@ -14,9 +14,14 @@ saveRegs	PROC
 					LDR			r10, =0xDDDD7777
 					LDR			r12, =0xEEEE8888
 					
-					LDR			r13, =task1Sp		;Let SP point to 'task1Sp'
+					LDR			r5, [r13]				;Remain the previous stack pointer
+					LDR			r13, =taskSp		;Let SP point to 'taskSp'
 					LDR			r13, [r13]			;Load value of 'task1Sp' into SP
-					PUSH		{r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r14}
+					PUSH		{r0-r12}
+					POP			{r0-r12}
+					LDR			r3, =taskSp			;Let r3 point to taskSp
+					STR			r13, [r3]				;Update new sp value to taskSp, same value in this case
+					LDR			r13, [r5]				;Use back the previous stack pointer
 
 					BX			lr									; Return to caller
 								

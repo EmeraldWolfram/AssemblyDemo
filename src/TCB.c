@@ -1,49 +1,38 @@
 #include "TCB.h"
 #include <stdlib.h>
+#include "LinkedList.h"
 
+Tcb mainTcb;
 Tcb task1Tcb;
 Tcb task2Tcb;
 Tcb task3Tcb;
-Tcb task4Tcb;
-Tcb task5Tcb;
 
 /**
  * Must call this function first
  */
-void initTcb(char* name, int taskSelection) {
-	switch(taskSelection){
-		case TASK_1:
-			task1Tcb.name = name;
-			task1Tcb.sp	  = (uint32_t)&task1Tcb.virtualStack[TASK_STACK_SIZE];
-			break;
-		case TASK_2:
-			task2Tcb.name = name;
-			task2Tcb.sp	  = (uint32_t)&task2Tcb.virtualStack[TASK_STACK_SIZE];
-			break;
-		case TASK_3:
-			task3Tcb.name = name;
-			task3Tcb.sp	  = (uint32_t)&task3Tcb.virtualStack[TASK_STACK_SIZE];
-			break;
-		case TASK_4:
-			task4Tcb.name = name;
-			task4Tcb.sp	  = (uint32_t)&task4Tcb.virtualStack[TASK_STACK_SIZE];
-			break;
-	}
+void initMainTcb(){
+	mainTcb.name	= "Main";
+	mainTcb.sp		= 0;
+	addListFirst(&stackList, &mainTcb);
 }
 
-uint32_t getTcbSp(int taskSelection){
-	switch(taskSelection){
-		case TASK_1:
-			return task1Tcb.sp;
-		case TASK_2:
-			return task2Tcb.sp;
-		case TASK_3:
-			return task2Tcb.sp;
-		case TASK_4:
-			return task2Tcb.sp;
-		default:
-			return task1Tcb.sp;
-	}
+ 
+void initTcb1() {
+	task1Tcb.name = "task_1";
+	task1Tcb.sp	  = (uint32_t)&task1Tcb.virtualStack[TASK_STACK_SIZE];
+	addListLast(&stackList, &task1Tcb);
+}
+
+void initTcb2() {
+	task2Tcb.name = "task_2";
+	task2Tcb.sp	  = (uint32_t)&task2Tcb.virtualStack[TASK_STACK_SIZE];
+	addListLast(&stackList, &task2Tcb);
+}
+
+void initTcb3() {
+	task3Tcb.name = "task_3";
+	task3Tcb.sp	  = (uint32_t)&task3Tcb.virtualStack[TASK_STACK_SIZE];
+	addListLast(&stackList, &task3Tcb);
 }
 
 // Study the code in AsssemblyModule.s and take note of what

@@ -427,6 +427,16 @@
               <FileType>5</FileType>
               <FilePath>.\src\TCB.h</FilePath>
             </File>
+            <File>
+              <FileName>LinkedList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\LinkedList.h</FilePath>
+            </File>
+            <File>
+              <FileName>LinkedList.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\LinkedList.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -456,6 +466,16 @@
               <FileName>SaveRegisters.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\src\SaveRegisters.h</FilePath>
+            </File>
+            <File>
+              <FileName>RetrieveRegisters.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\RetrieveRegisters.s</FilePath>
+            </File>
+            <File>
+              <FileName>RetrieveRegisters.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\RetrieveRegisters.h</FilePath>
             </File>
           </Files>
         </Group>

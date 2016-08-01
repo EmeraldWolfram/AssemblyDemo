@@ -5,37 +5,40 @@
  */
 
 #include <stdint.h>
-#include "stm32f4xx.h"
+#include "stm32f429xx.h"
+#include "stm32f4xx_hal_cortex.h"
 #include "AssemblyModule.h"
 #include "TCB.h"
 #include "SaveRegisters.h"
+#include "RetrieveRegisters.h"
+#include "LinkedList.h"
 
 extern int fourBytes;						// Import from AssemblyModule.s
 extern uint16_t twoBytes;				// Import from AssemblyModule.s
-extern int task1Sp;							// Import from SaveRegisters.s
+extern int taskSp;							// Import from SaveRegisters.s
 
 uint32_t variableInC = 0xdeaf;
 
-void waitForever(void) {
-	volatile int counter = 500000;
-	while(counter--);
-//	NVIC_DisableIRQ(SysTick_IRQn);
-	disableSysTickInterrupt();
+void taskInit(Tcb* tcb, void* taskFunc){
+	
 }
 
 int main() {
+	int i = 0;
 	fourBytes = 0xdeadbeef;
-	task1Sp	= 0xace0face;
+	taskSp	= 0xace0face;
 	noArgFunc();
-
-	initTcb("task1", TASK_1);
-	task1Sp	= getTcbSp(TASK_1);
-	saveRegs();
 	
-	initSysTick();
-  //waitForever();
+	initTcb1();
+	taskSp = task1Tcb.sp;
+	saveRegs();
 
-	int i;
+	initLinkedList();
+	initMainTcb();
+
+	initSysTick();
+
+	
 	while(1) {
 		i++;
 	}
@@ -45,4 +48,28 @@ int main() {
 
 int cFunc() {
 	return 0xc00000 + twoBytes;		//
+}
+
+void task1(){
+	int i = 0;
+	
+	while(1){
+		i++;
+	}
+}
+
+void task2(){
+	int i = 0;
+	
+	while(1){
+		i++;
+	}
+}
+
+void task3(){
+	int i = 0;
+	
+	while(1){
+		i++;
+	}
 }

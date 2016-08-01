@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 /**
  * createLinkedList
@@ -27,6 +28,15 @@
  *	2. newNode		new created node that store the "inValue"
  */
 
+LinkedList stackList;
+
+void initLinkedList(){
+	stackList.head	= NULL;
+	stackList.tail	= NULL;
+	stackList.length= 0;
+}
+
+
 
 LinkedList* createLinkedList(){
 	LinkedList* newList = malloc(sizeof(LinkedList));
@@ -49,16 +59,13 @@ ListElement* createListElement(void* inValue){
 	return newNode;
 }
 
-void addListLast(LinkedList* currentList, ListElement* currentNode){
+void addListLast(LinkedList* currentList, Tcb* currentNode){
 
-  if(currentList == NULL){
-    ThrowError(ERR_NULL_LIST, "ERROR: Link List cannot be NULL!");
-  }
   if(currentNode == NULL){
     currentList = currentList;
   }
   else{
-    ListElement* tempNode = currentList->head;
+    Tcb* tempNode = currentList->head;
 		//check if the linked list empty. If empty, create a Node that the head point to
 		if(currentList->head == NULL){
 			currentList->head = currentNode;
@@ -76,15 +83,13 @@ void addListLast(LinkedList* currentList, ListElement* currentNode){
   }
 }
 
-void addListFirst(LinkedList* list, ListElement *elem){ 
-  if(list == NULL){
-    ThrowError(ERR_NULL_LIST, "ERROR: Link List cannot be NULL!");
-  }
+void addListFirst(LinkedList* list, Tcb *elem){ 
+
   if(elem == NULL){
     elem = elem;
   }
   else{
-    ListElement* prevHead = list->head;
+    Tcb* prevHead = list->head;
     list->head = elem; //No matter what, the head always point to the new added Element
     
     if(list->length == 0){
@@ -98,13 +103,9 @@ void addListFirst(LinkedList* list, ListElement *elem){
   }
 }
 
-ListElement* listRemoveFirst(LinkedList* link){
-  ListElement* removedElement;
+Tcb* listRemoveFirst(LinkedList* link){
+  Tcb* removedElement;
 
-  if(link == NULL){    
-    removedElement = NULL;
-    ThrowError(ERR_NULL_LIST, "ERROR: Link List cannot be NULL!");
-  }
   if(link->head == NULL){
     removedElement = NULL;
   }
@@ -122,14 +123,10 @@ ListElement* listRemoveFirst(LinkedList* link){
   return removedElement;
 }
 
-ListElement* listRemoveLast(LinkedList* link){
-  ListElement* removedElement;
-  ListElement* tempNode;
+Tcb* listRemoveLast(LinkedList* link){
+  Tcb* removedElement;
+  Tcb* tempNode;
  
-  if(link == NULL){    
-    removedElement = NULL;
-    ThrowError(ERR_NULL_LIST, "ERROR: Link List cannot be NULL!");
-  }
   if(link->head == NULL){
     removedElement = NULL;
   }
@@ -153,8 +150,8 @@ ListElement* listRemoveLast(LinkedList* link){
   return removedElement;
 }
 
-ListElement* listFind(LinkedList* list, void* value, int(*compare)(void*,void*)){
-  ListElement* tempElement;
+Tcb* listFind(LinkedList* list, void* value, int(*compare)(void*,void*)){
+  Tcb* tempElement;
 
   if(list == NULL){
     return NULL;
@@ -164,7 +161,7 @@ ListElement* listFind(LinkedList* list, void* value, int(*compare)(void*,void*))
   }
   else{
     tempElement = list->head;
-    while(compare(tempElement->value,value) != 0 && tempElement->next != NULL){
+    while(compare(&(tempElement->sp),value) != 0 && tempElement->next != NULL){
       tempElement = tempElement->next;
     }
     if(tempElement->next == NULL){

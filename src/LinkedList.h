@@ -1,8 +1,7 @@
 #ifndef LinkedList_H
 #define LinkedList_H
 
-#include "ErrorObject.h"
-
+#include "TCB.h"
 /**
  * LinkedList
  *	
@@ -38,21 +37,25 @@ struct ListElement_t{
 };
 
 typedef struct{
-	ListElement* head;
-	ListElement* tail;
+	Tcb* head;
+	Tcb* tail;
   int length;
 }LinkedList;
+
+extern LinkedList	stackList;
+
+void initLinkedList();
 
 ListElement* createListElement(void* value);
 LinkedList* createLinkedList();
 
-void addListLast(LinkedList* currentList, ListElement* currentNode);
-void addListFirst(LinkedList* stack, ListElement *elem);
+void addListLast(LinkedList* currentList, Tcb* currentNode);
+void addListFirst(LinkedList* stack, Tcb *elem);
 
-ListElement* listRemoveFirst(LinkedList* link);
-ListElement* listRemoveLast(LinkedList* link);
+Tcb* listRemoveFirst(LinkedList* link);
+Tcb* listRemoveLast(LinkedList* link);
 
-ListElement* listFind(LinkedList* list, void* value, int(*compare)(void*,void*));
+Tcb* listFind(LinkedList* list, void* value, int(*compare)(void*,void*));
 int intCompare(void *first, void *second);
 int stringCompare(void *first, void *second);
 
