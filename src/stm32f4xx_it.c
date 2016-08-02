@@ -165,11 +165,11 @@ void SysTick_Handler(void)
 {
 	Tcb* currentTcb	= listRemoveFirst(&stackList);
 	querySp();
-	currentTcb->sp	= curSp;
+  currentTcb->sp	= curSp;
 	addListLast(&stackList, currentTcb);
 	switchSp(stackList.head->sp);
 	
-//	clearSysTickCountFlag();
+	//clearSysTickCountFlag();
   HAL_IncTick();
 }
 

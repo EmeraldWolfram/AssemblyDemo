@@ -16,14 +16,14 @@ initTask	PROC
 
 					LDR			r13, =curSp						;Let SP point to 'curSp'
 					LDR			r13, [r13]						;Load value of 'task1Sp' into SP
-					LDR			r1, =taskFunc
-					LDR			r1, [r1]
-					MOV			r2, #0x00
-					MOV			r3, #0x01
-					MOV			r4, #0x02
-					MOV			r5, #0x03
+					LDR			r1, =0xFFFFFFF9
+					LDR			r2, =0x20000000
+					LDR			r3, =0x11111111
+					LDR			r4, =0x22222222
+					LDR			r5, =0x33333333
 					MOV			r6, #0x12
-					MOVS		r8, r1
+					LDR			r8, =taskFunc
+					LDR			r8, [r8]
 					SUB			r7, r8, #1
 					LDR			r9, =0x01000000
 					
@@ -43,8 +43,10 @@ switchSp	PROC
 					STR			r0, [r1]
 					LDR			r13, =mainSp
 					LDR			r13, [r13]
+					MOVS		r10, LR
+					LDR			LR,	=0xFFFFFFF9
 					
-					BX			lr					
+					BX			r10					
 					ENDP
 	
 querySp		PROC
