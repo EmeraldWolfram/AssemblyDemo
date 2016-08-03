@@ -10,7 +10,6 @@
 #include "AssemblyModule.h"
 #include "TCB.h"
 #include "SaveRegisters.h"
-#include "RetrieveRegisters.h"
 #include "InitTask.h"
 #include "LinkedList.h"
 
@@ -53,19 +52,22 @@ void taskInit(Tcb tcb, void* tFunc){
 }
 //============================================
 int main() {	
+	//Reference of programming
 	int i = 0;
 	fourBytes = 0xdeadbeef;
 	taskSp	= 0xace0face;
 	noArgFunc();
-	
+	//End of Reference
 	
 	initLinkedList();
 	initMainTcb();
+	
 	//First Coursework saveRegs()
 	initTcb1();
 	taskSp = task1Tcb.sp;
 	saveRegs();
 	//End of 1st course work
+	
 	taskInit(task1Tcb, task1);
 	task1Tcb.sp	= curSp;
 	
@@ -78,8 +80,6 @@ int main() {
 
 	initSysTick();
 
-	querySp();
-	stackList.head->sp	= curSp;
 	while(1) {
 		i++;
 	}

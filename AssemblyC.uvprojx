@@ -468,16 +468,6 @@
               <FilePath>.\src\SaveRegisters.h</FilePath>
             </File>
             <File>
-              <FileName>RetrieveRegisters.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\src\RetrieveRegisters.s</FilePath>
-            </File>
-            <File>
-              <FileName>RetrieveRegisters.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\RetrieveRegisters.h</FilePath>
-            </File>
-            <File>
               <FileName>InitTask.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\src\InitTask.s</FilePath>
