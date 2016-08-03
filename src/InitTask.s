@@ -43,10 +43,8 @@ switchSp	PROC
 					STR			r0, [r1]
 					LDR			r13, =mainSp
 					LDR			r13, [r13]
-					MOVS		r10, LR
-					LDR			LR,	=0xFFFFFFF9
 					
-					BX			r10					
+					BX			lr
 					ENDP
 	
 querySp		PROC
