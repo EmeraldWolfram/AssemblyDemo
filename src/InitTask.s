@@ -28,6 +28,7 @@ initTask	PROC
 					LDR			r9, =0x01000000
 					
 					PUSH		{r0-r9}
+					PUSH		{r4-r11}
 					LDR			r9, =curSp			;Let r3 point to taskSp
 					STR			r13, [r9]				;Update new sp value to taskSp
 					LDR			r13, =mainSp
@@ -54,4 +55,17 @@ querySp		PROC
 					
 					BX			lr							;back to caller
 					ENDP
+						
+pushRegs	PROC
+					EXPORT	pushRegs
+					PUSH		{r4-r11}
+					BX			lr
+					ENDP
+						
+popRegs		PROC
+					EXPORT	popRegs
+					POP			{r4-r11}
+					BX			lr	
+					ENDP
+						
 					END

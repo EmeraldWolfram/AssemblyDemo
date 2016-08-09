@@ -163,11 +163,13 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+	pushRegs();
 	Tcb* currentTcb	= listRemoveFirst(&stackList);
 	querySp();
   currentTcb->sp	= curSp;
 	addListLast(&stackList, currentTcb);
 	switchSp(stackList.head->sp);
+	popRegs();
 	
 	clearSysTickCountFlag();
   HAL_IncTick();

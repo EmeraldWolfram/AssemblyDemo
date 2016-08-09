@@ -9,4 +9,8 @@ void switchSp(int newSP);
 
 void querySp(void);
 
+void pushRegs(void);
+
+void popRegs(void);
+
 #endif	// __INIT_TASK_H__
