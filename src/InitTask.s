@@ -39,19 +39,19 @@ initTask	PROC
 switchSp	PROC
 					EXPORT	switchSp
 				
-					LDR			r1, =mainSp
-					STR			r0, [r1]
-					LDR			r13, =mainSp
-					LDR			r13, [r13]
+					LDR			r1, =mainSp			;Let r1 point to 'mainSp'
+					STR			r0, [r1]				;store r0 (the new SP brought in) into 'mainSp'
+					LDR			r13, =mainSp		;Let r13 point to 'mainSp'
+					LDR			r13, [r13]			;Load 'mainSp' into the SP
 					
-					BX			lr
+					BX			lr							;back to caller
 					ENDP
 	
 querySp		PROC
-					EXPORT	querySp
-					LDR			r0, =curSp
-					STR			r13,[r0]
+					EXPORT	querySp					
+					LDR			r0, =curSp			;Let r0 point to 'curSp'
+					STR			r13,[r0]				;Store SP into 'curSp'
 					
-					BX			lr
+					BX			lr							;back to caller
 					ENDP
 					END

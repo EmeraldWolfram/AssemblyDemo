@@ -169,7 +169,7 @@ void SysTick_Handler(void)
 	addListLast(&stackList, currentTcb);
 	switchSp(stackList.head->sp);
 	
-	//clearSysTickCountFlag();
+	clearSysTickCountFlag();
   HAL_IncTick();
 }
 
